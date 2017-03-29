@@ -9,6 +9,7 @@ namespace BlackJack
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }
