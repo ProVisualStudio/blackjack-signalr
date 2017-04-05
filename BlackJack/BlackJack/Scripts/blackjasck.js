@@ -1,6 +1,6 @@
 ﻿$(function () {
     // dichiaro la referenza al proxy hub
-    var hub = $.connection.chatHub;
+    var hub = $.connection.gameHub;
 
     // creo la function broadcast
     hub.client.broadcast = function (name, message) {
