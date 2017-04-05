@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using BlackJack.Models;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(BlackJack.Startup))]
@@ -10,6 +11,8 @@ namespace BlackJack
         {
             ConfigureAuth(app);
             app.MapSignalR();
+            Card[] Cards = new Card[52] ;
+            Cards[0].;
         }
     }
 }
