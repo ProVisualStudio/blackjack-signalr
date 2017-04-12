@@ -12,7 +12,7 @@ namespace BlackJack
             ConfigureAuth(app);
             app.MapSignalR();
             Card[] Cards = new Card[52] ;
-            Cards[0].;
+            
         }
     }
 }
