@@ -210,7 +210,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\GameHub.cs" />
-    <Compile Include="Hubs\User.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Hubs\DeckHub.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Deck.cs" />

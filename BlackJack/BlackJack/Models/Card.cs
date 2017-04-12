@@ -15,7 +15,8 @@ namespace BlackJack.Models
         //public virtual Deck Deck { get; set; }
 
 
-        //
+        //http://stackoverflow.com/questions/9933176/playing-cards-should-they-be-enum-or-struct-or-class
+
         private readonly Suit _suit;
         private readonly Value _value;
 

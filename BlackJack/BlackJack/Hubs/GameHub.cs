@@ -10,6 +10,8 @@ namespace BlackJack.Hubs
     public class GameHub : Hub
     {
         private static List<User> Users = new List<User>();
+        private static Table table = new Table();
+        private static int conteggio = 0;
 
         public override Task OnConnected()
         {
@@ -20,6 +22,12 @@ namespace BlackJack.Hubs
             User user = new User();
             user.ConnectionId = Context.ConnectionId;
             Users.Add(user);
+            conteggio++;
+            if(conteggio <= 7)
+            {
+                table.Users.Add(user);
+            }
+            Send();
             return base.OnConnected();
         }
 
@@ -30,6 +38,22 @@ namespace BlackJack.Hubs
                        select u).First();
             me.Nome = name;
             Clients.Others.newNickName(name);
+        }
+
+       
+        public void Send()
+        {
+            Clients.All.broadcast(conteggio);
+        }
+
+
+
+       
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            conteggio--;
+            Send();
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

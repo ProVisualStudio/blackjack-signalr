@@ -8,6 +8,6 @@ namespace BlackJack.Hubs
 {
     public class Table
     {
-       
+        public virtual ICollection<User> Users { get; set; }
     }
 }
