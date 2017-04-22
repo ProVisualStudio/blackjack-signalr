@@ -59,24 +59,44 @@ namespace BlackJack.Hubs
             Send();
             return base.OnDisconnected(stopCalled);
         }
-
-        public void OnGameLoaded()
+        
+        /**
+         * Metodo che prepara una nuova partita
+         */       
+        public void newGame()
         {
+            CreateDeck();
+            ShuffleDeck(this.cards);
 
         }
         /*
-         *Metodo che prende i mazzi di carte, li unisce e i mischia (da finire)
+         *Metodo che prende i mazzi di carte, li unisce e i mischia
          *   
-             */
-        public Card[] MischiaCarte() {
+         */
+        public void CreateDeck() {
             decks = new Deck[qtaMazzi];
             int qtaCarte = qtaMazzi * 52;
             cards = new Card[qtaCarte];
             for (int i = 0; i < qtaMazzi; i++)
             {
-                cards = decks[qtaMazzi].Cards;
+
+                cards = cards.Union(decks[qtaMazzi].Cards).ToArray();
             }
-            return cards;
+        }
+
+        public void ShuffleDeck(Card[] cards)
+        {
+            Random r = new Random();
+            int randomIndex = 0;
+            Card[] shuffleCards = new Card[cards.Length];
+            var listCard = new List<Card>(cards);
+            for (int i = 0; i < cards.Length; i++)
+            {
+                randomIndex = r.Next(0, cards.Length); //Choose a random object in the list
+                shuffleCards[i] = listCard.ElementAt(randomIndex); //add it to the new, random list
+                listCard.RemoveAt(randomIndex); //remove to avoid duplicates
+            }
+            this.cards = cards;
         }
     }
 }
