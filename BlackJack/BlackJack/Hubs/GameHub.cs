@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using BlackJack.Models;
 
 namespace BlackJack.Hubs
 {
@@ -12,6 +13,9 @@ namespace BlackJack.Hubs
         private static List<User> Users = new List<User>();
         private static Table table = new Table();
         private static int conteggio = 0;
+        private Deck[] decks;
+        private Card[] cards;
+        private static int qtaMazzi = 6;
 
         public override Task OnConnected()
         {
@@ -54,6 +58,25 @@ namespace BlackJack.Hubs
             conteggio--;
             Send();
             return base.OnDisconnected(stopCalled);
+        }
+
+        public void OnGameLoaded()
+        {
+
+        }
+        /*
+         *Metodo che prende i mazzi di carte, li unisce e i mischia (da finire)
+         *   
+             */
+        public Card[] MischiaCarte() {
+            decks = new Deck[qtaMazzi];
+            int qtaCarte = qtaMazzi * 52;
+            cards = new Card[qtaCarte];
+            for (int i = 0; i < qtaMazzi; i++)
+            {
+                cards = decks[qtaMazzi].Cards;
+            }
+            return cards;
         }
     }
 }
