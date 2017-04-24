@@ -10,5 +10,10 @@ namespace BlackJack.Hubs
     {
         public string ConnectionId { get; set; }
         public string Nome { get; set; }
+        /**
+         * variabile che conta quanti punti / soldi abbiamo a disposizione per giocare 
+         */
+        public int Money { get; set; }
+
     }
 }
