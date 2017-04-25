@@ -47,11 +47,35 @@ namespace BlackJack.Hubs
         
         /**
          * Metodo che prepara una nuova partita
-         */   
-         
-        public void NewGame()
+         */       
+        public void newGame()
+        {
+            this.cards = dh.CreateDeck(qtaMazzi);
+            dh.ShuffleCards(this.cards);
+            foreach (Card card in cards)
+            {
+                Clients.All.printCard("Carta: " + card.rank + " | " + card.suit);
+            }
+
+        }
+
+        public Card GetCard()
+        {
+            if(pos > cards.Length)
+            {
+                dh.ShuffleCards(cards);
+                pos = 0;
+            }
+            Card c = cards[pos];
+            pos++;
+            return c;
+        }
+
+        public bool Hit()
         {
 
-        }    
+            return true;
+        }
+
     }
 }
