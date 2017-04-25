@@ -17,10 +17,10 @@
     };
 
     $.connection.hub.start().done(function () {
-        //hub.server.setNickname($('#name').val());
+        hub.server.setNickname($('#name').val());
 
         $('#send').click(function () {
-            $('#send').remove();
+            hub.server.newGame();
         });
     });
 

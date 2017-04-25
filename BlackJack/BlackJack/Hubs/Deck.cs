@@ -22,9 +22,14 @@ namespace BlackJack.Hubs
             for (int i = 0; i < qtaMazzi; i++)
             {
 
-                cards = cards.Union(decks[qtaMazzi].Cards).ToArray();
+                cards = cards.Union(decks[i].Cards).ToArray();
             }
             return cards;
+        }
+
+        public void GetDeck()
+        {
+            Models.Deck[] decks = new Models.Deck[2];
         }
 
         public Card[] ShuffleCards(Card[] cards)

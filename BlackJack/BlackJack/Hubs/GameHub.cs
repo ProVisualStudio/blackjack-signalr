@@ -48,7 +48,7 @@ namespace BlackJack.Hubs
         /**
          * Metodo che prepara una nuova partita
          */       
-        public void newGame()
+        public void NewGame()
         {
             this.cards = dh.CreateDeck(qtaMazzi);
             dh.ShuffleCards(this.cards);
