@@ -14,7 +14,7 @@ namespace BlackJack.Hubs
           *Metodo che prende i mazzi di carte, li unisce e i mischia
           *   
           */
-        public Deck[] CreateDeck(int qtaMazzi)
+        public Card[] CreateDeck(int qtaMazzi)
         { 
             Deck[] decks = new Deck[qtaMazzi];
             int qtaCarte = qtaMazzi * 52;
@@ -24,7 +24,7 @@ namespace BlackJack.Hubs
 
                 cards = cards.Union(decks[qtaMazzi].Cards).ToArray();
             }
-            return decks;
+            return cards;
         }
 
         public Card[] ShuffleCards(Card[] cards)
