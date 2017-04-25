@@ -2,13 +2,14 @@
 {
     public class Card
     {
-        private int rank;
-        private string suit;
-
+        public int rank { get; private set; }
+        public string suit { get; private set; }
         public Card(int rank, string suit)
         {
             this.rank = rank;
             this.suit = suit;
         }
+
+        
     }
 }
