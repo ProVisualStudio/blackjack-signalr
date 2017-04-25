@@ -21,7 +21,7 @@ namespace BlackJack.Hubs
         {
             foreach (var u in Users)
             {
-                Clients.Caller.newNickName(u.Nome);
+                Clients.Caller.newNickName(Context.ConnectionId, u.Nome);
             }
             User user = new User();
             user.ConnectionId = Context.ConnectionId;
@@ -35,11 +35,20 @@ namespace BlackJack.Hubs
                        where u.ConnectionId == Context.ConnectionId
                        select u).First();
             me.Nome = name;
-            Clients.All.newNickName(name);
+            Clients.All.newNickName(Context.ConnectionId, name);
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            User me = (from u in Users
+                       where u.ConnectionId == Context.ConnectionId
+                       select u).First();
+            Users.Remove(me);
+            Clients.All.updNickName();
+            foreach (var u in Users)
+            {
+                Clients.All.newNickName(Context.ConnectionId, u.Nome);
+            }
             return base.OnDisconnected(stopCalled);
         }
 
@@ -51,18 +60,12 @@ namespace BlackJack.Hubs
         public void NewGame()
         {
             this.cards = dh.CreateDeck(qtaMazzi);
-            dh.ShuffleCards(this.cards);
-            for(int i = 1; i <= cards.Length; i=i+20)
+            this.cards = this.cards.Skip(1).ToArray();
+            this.cards = dh.ShuffleCards(this.cards);
+            for(int i = 0; i < cards.Length; i++)
             {
-                Clients.All.printCard(cards[i].rank.ToString());
+                Clients.Caller.printCard("ID:"+ i + " " + cards[i].Rank.ToString()+" "+ cards[i].Suit.ToString() + "Val:" + dh.GetCardScore(cards[i]));
             }
-            
-            /*
-            foreach (Card card in cards)
-            {
-                Clients.All.printCard("Carta: " + card.rank + " | " + card.suit);
-            }*/
-
         }
 
         public Card GetCard()

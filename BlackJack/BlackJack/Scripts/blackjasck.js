@@ -5,10 +5,10 @@
     $('#name').val(prompt('Inserisci il tuo nick:', 'nome'));
 
     //creo la funzione newNickName
-    hub.client.newNickName = function (name) {
+    hub.client.newNickName = function (id,name) {
         //evito injection
         var encName = $('<div />').text(name).html();
-        $('#listName').append('<li><strong>' + encName +
+        $('#listName').append('<li id="'+id+'"><strong>' + encName +
                     '</strong>');
     };
 
@@ -17,10 +17,15 @@
                     '</strong>');
     };
 
+    hub.client.updNickName = function () {
+        $('#listName').empty();
+    }
+
     $.connection.hub.start().done(function () {
         hub.server.setNickname($('#name').val());
 
         $('#send').click(function () {
+            $('#listCards').empty();
             hub.server.newGame();
         });
     });

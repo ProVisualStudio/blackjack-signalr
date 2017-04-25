@@ -57,21 +57,21 @@ namespace BlackJack.Hubs
                     }
                 }
             }
-            return cards;
+            return shuffleCards;
         }
 
 
         public int GetCardScore(Card card)
         {
-            if (card.rank == 1)
+            if (card.Rank == 1)
             {
                 return 11;
             }
-            else if (card.rank >= 11)
+            else if (card.Rank >= 11)
             {
                 return 10;
             }
-            return card.rank;
+            return card.Rank;
         }
     }
 }
