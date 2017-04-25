@@ -8,13 +8,22 @@ namespace BlackJack.Models
 {
     public class Hand
     {
+        List<Card> cards = new List<Card>();
         public int Score { get; set; }
 
         public virtual User Utente { get; set; }
 
-        public void Hit()
+        public void AddCard(Card c)
         {
+            cards.Add(c);
+        }
 
+       public int HandScore()
+        {
+            for (int i = 0; i < length; i++)
+            {
+
+            }
         }
     }
 }
