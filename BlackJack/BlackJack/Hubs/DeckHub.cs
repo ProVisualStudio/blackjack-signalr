@@ -41,5 +41,13 @@ namespace BlackJack.Hubs
             }
             return cards;
         }
+
+        public void printCards(Card[] cards)
+        {
+            foreach(Card card in cards)
+            {
+                Console.WriteLine("Carta: " + card.rank + " | " + card.suit);
+            }
+        }
     }
 }

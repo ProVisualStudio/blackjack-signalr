@@ -26,11 +26,6 @@ namespace BlackJack.Hubs
             User user = new User();
             user.ConnectionId = Context.ConnectionId;
             Users.Add(user);
-            conteggio++;
-            if(conteggio <= 7)
-            {
-                table.Users.Add(user);
-            }
             Send();
             return base.OnConnected();
         }
@@ -41,7 +36,7 @@ namespace BlackJack.Hubs
                        where u.ConnectionId == Context.ConnectionId
                        select u).First();
             me.Nome = name;
-            Clients.Others.newNickName(name);
+            Clients.All.newNickName(name);
         }
 
        
@@ -67,6 +62,7 @@ namespace BlackJack.Hubs
         {
             this.cards = dh.CreateDeck(qtaMazzi);
             dh.ShuffleCards(this.cards);
+            dh.printCards(cards);
 
         }
        
