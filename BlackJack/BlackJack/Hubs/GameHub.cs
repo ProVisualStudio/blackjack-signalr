@@ -72,10 +72,15 @@ namespace BlackJack.Hubs
             this.cards = dh.ShuffleCards(this.cards);
             dealerH= new Hand();
             playerH = new Hand();
-            for (int i = 0; i < cards.Length; i++)
+            dealerH.AddCard(GetCard());
+            dealerH.AddCard(GetCard());
+            playerH.AddCard(GetCard());
+            playerH.AddCard(GetCard());
+            foreach(Card card in playerH.GetCards())
             {
-                Clients.Caller.printCard("ID:"+ i + " " + cards[i].Rank.ToString()+" "+ cards[i].Suit.ToString() + "Val:" + dh.GetCardScore(cards[i]));
+                Clients.All.addCardP(card.Suit + "|" + card.Rank);
             }
+            
         }
         /**
          * Metodo ce fa terminare una partita e ritorna il vincitore
@@ -107,7 +112,7 @@ namespace BlackJack.Hubs
         {
             if(pos > cards.Length)
             {
-                dh.ShuffleCards(cards);
+                cards = dh.ShuffleCards(cards);
                 pos = 0;
             }
             Card c = cards[pos];
@@ -120,16 +125,13 @@ namespace BlackJack.Hubs
         {
             playerH.AddCard(GetCard());
             playerH.HandScore();
-            if (!BustCheck(playerH))
+            if (BustCheck(playerH))
             {
                 //chiedere al utente cosa fare
-            }
-            else
-            {
                 isPlayerBust = true;
                 EndGame();
+
             }
-            
         }
 
         //metodo che effettua il controllo se l'utente a fa terminare il turno al player
