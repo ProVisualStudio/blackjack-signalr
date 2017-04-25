@@ -47,6 +47,11 @@ namespace BlackJack.Hubs
         
         /**
          * Metodo che prepara una nuova partita
-         */       
+         */   
+         
+        public void NewGame()
+        {
+
+        }    
     }
 }

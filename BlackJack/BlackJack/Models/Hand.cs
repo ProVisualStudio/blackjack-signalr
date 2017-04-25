@@ -16,7 +16,5 @@ namespace BlackJack.Models
         {
 
         }
-
-        public void 
     }
 }
