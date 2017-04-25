@@ -16,6 +16,8 @@ namespace BlackJack.Hubs
         private static int qtaMazzi = 6;
         private DeckHelper dh = new DeckHelper();
         private int pos = 0;
+        private Hand dealerH;
+        private Hand playerH;
 
         public override Task OnConnected()
         {
@@ -62,7 +64,9 @@ namespace BlackJack.Hubs
             this.cards = dh.CreateDeck(qtaMazzi);
             this.cards = this.cards.Skip(1).ToArray();
             this.cards = dh.ShuffleCards(this.cards);
-            for(int i = 0; i < cards.Length; i++)
+            dealerH= new Hand();
+            playerH = new Hand();
+            for (int i = 0; i < cards.Length; i++)
             {
                 Clients.Caller.printCard("ID:"+ i + " " + cards[i].Rank.ToString()+" "+ cards[i].Suit.ToString() + "Val:" + dh.GetCardScore(cards[i]));
             }
@@ -80,9 +84,9 @@ namespace BlackJack.Hubs
             return c;
         }
 
-        public bool Hit(Hand h)
+        public bool Hit(Hand player)
         {
-
+            
             return true;
         }
 
