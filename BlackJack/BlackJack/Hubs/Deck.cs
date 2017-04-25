@@ -17,12 +17,13 @@ namespace BlackJack.Hubs
         public Card[] CreateDeck(int qtaMazzi)
         {
             Models.Deck[] decks = new Models.Deck[qtaMazzi];
+            
             int qtaCarte = qtaMazzi * 52;
             Card[] cards = new Card[qtaCarte];
             for (int i = 0; i < qtaMazzi; i++)
             {
-
-                cards = cards.Union(decks[qtaMazzi].Cards).ToArray();
+                decks[i] = new Models.Deck();
+                cards = cards.Union(decks[i].Cards).ToArray();
             }
             return cards;
         }
