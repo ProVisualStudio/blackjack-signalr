@@ -12,16 +12,16 @@
                     '</strong>');
     };
 
-    hub.client.printCard = function (card) {
-        var enc = $('<div />').text(card).html();
-        alert(enc);
+    hub.client.printCard = function (name) {
+        alert(name);
     };
 
     $.connection.hub.start().done(function () {
-        Console.log("finito");
         hub.server.setNickname($('#name').val());
-        Console.log("Nick settato");
-        hub.server.newGame();
-        Console.log("Nuova partita");
+
+        $('#send').click(function () {
+            $('#send').remove();
+        });
     });
+
 });

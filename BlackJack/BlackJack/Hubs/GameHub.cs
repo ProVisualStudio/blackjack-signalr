@@ -37,8 +37,6 @@ namespace BlackJack.Hubs
             Clients.All.newNickName(name);
         }
 
-      
-       
         public override Task OnDisconnected(bool stopCalled)
         {
             return base.OnDisconnected(stopCalled);
@@ -47,16 +45,5 @@ namespace BlackJack.Hubs
         /**
          * Metodo che prepara una nuova partita
          */       
-        public void newGame()
-        {
-            this.cards = dh.CreateDeck(qtaMazzi);
-            dh.ShuffleCards(this.cards);
-            foreach (Card card in cards)
-            {
-                Clients.All.printCard("Carta: " + card.rank + " | " + card.suit);
-            }
-
-        }
-       
     }
 }
