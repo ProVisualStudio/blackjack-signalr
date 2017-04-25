@@ -162,7 +162,7 @@ namespace BlackJack.Hubs
                     EndGame();
                 }
             }
-            else if(dealerH.Score > 20)
+            else if(dealerH.Score > 20) 
             {
                 EndGame();
             }
