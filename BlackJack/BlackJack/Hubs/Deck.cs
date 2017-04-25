@@ -46,5 +46,18 @@ namespace BlackJack.Hubs
         {
             return "Carta: " + card.rank + " | " + card.suit;
         }
+
+        public int GetCardScore(Card card)
+        {
+            if (card.rank == 1)
+            {
+                return 11;
+            }
+            else if (card.rank >= 11)
+            {
+                return 10;
+            }
+            return card.rank;
+        }
     }
 }

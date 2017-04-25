@@ -15,6 +15,7 @@ namespace BlackJack.Hubs
         private Card[] cards;
         private static int qtaMazzi = 6;
         private Deck dh = new Deck();
+        private int pos = 0;
 
         public override Task OnConnected()
         {
@@ -41,6 +42,8 @@ namespace BlackJack.Hubs
         {
             return base.OnDisconnected(stopCalled);
         }
+
+       
         
         /**
          * Metodo che prepara una nuova partita
