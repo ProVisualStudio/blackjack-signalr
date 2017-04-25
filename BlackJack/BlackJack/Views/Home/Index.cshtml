@@ -1,18 +1,26 @@
 ﻿<h1>BlackJack Online</h1>
 <input type="hidden" id="name" />
-<div style="height:65%" class="row">
-    <div style="background-color:darkseagreen" class="col-md-12">
-        <ul id="listCards" class="col-md-6"></ul>
-    </div>
+<div  class="col-md-12">
+    <input class="btn btn-primary" type="button" id="start" value="Iniza Partita" />
 </div>
-<div style="height:30%" class="row">
-    <div class="col-md-3">
+    <hr />
+    <div style="height:65%" class="row">
+        <div style="background-color:darkseagreen" class="col-md-12">
+            <ul id="listCards" class="col-md-6"></ul>
+            <ul id="listCardsP" class="col-md-6"></ul>
+        </div>
+    </div>
+    <div style="height:30%" class="row">
+        <div class="col-md-3">
 
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-success" type="button" id="hit" value="HIT" />
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-danger" type="button" id="stay" value="STAY" />
+        </div>
+        <div class="col-md-3">
+            <ul id="listName" class="col-md-6"></ul>
+        </div>
     </div>
-    <div class="col-md-6">
-        <input type="button" id="send" value="Invia" />
-    </div>
-    <div class="col-md-3">
-        <ul id="listName" class="col-md-6"></ul>
-    </div>
-</div>

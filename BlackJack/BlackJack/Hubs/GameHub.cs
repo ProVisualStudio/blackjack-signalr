@@ -67,14 +67,18 @@ namespace BlackJack.Hubs
          */       
         public void NewGame()
         {
-            this.cards = dh.CreateDeck(qtaMazzi);
-            this.cards = this.cards.Skip(1).ToArray();
-            this.cards = dh.ShuffleCards(this.cards);
+            pos = 1;
+            cards = dh.CreateDeck(qtaMazzi);
+            cards = cards.Skip(1).ToArray();
+            cards = dh.ShuffleCards(cards);
             dealerH= new Hand();
             playerH = new Hand();
-            for (int i = 0; i < cards.Length; i++)
+            playerH.AddCard(GetCard());
+            playerH.AddCard(GetCard());
+            List<Card> c = playerH.GetCards();
+            for (int i = 0; i < c.Count; i++)
             {
-                Clients.Caller.printCard("ID:"+ i + " " + cards[i].Rank.ToString()+" "+ cards[i].Suit.ToString() + "Val:" + dh.GetCardScore(cards[i]));
+                Clients.Caller.printCardP(c[i].Rank.ToString()+" "+ c[i].Suit.ToString() + "Val:" + dh.GetCardScore(c[i]));
             }
         }
         /**
@@ -105,24 +109,25 @@ namespace BlackJack.Hubs
 
         public Card GetCard()
         {
-            if(pos > cards.Length)
+            if(cards.Length < 1)
             {
-                dh.ShuffleCards(cards);
-                pos = 0;
+                cards = dh.ShuffleCards(cards);
             }
-            Card c = cards[pos];
-            pos++;
+            Card c = cards[0];
+            cards = cards.Skip(1).ToArray();
             return c;
         }
 
        
         public void Hit()
         {
+            //Card carta = GetCard();
             playerH.AddCard(GetCard());
             playerH.HandScore();
             if (!BustCheck(playerH))
             {
                 //chiedere al utente cosa fare
+                //Clients.Caller.printCardP(carta.Rank.ToString() + " " + carta.Suit.ToString() + "Val:" + dh.GetCardScore(carta));
             }
             else
             {
