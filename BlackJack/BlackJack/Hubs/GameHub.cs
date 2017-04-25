@@ -16,6 +16,7 @@ namespace BlackJack.Hubs
         private Card[] cards;
         private static int qtaMazzi = 6;
         private DeckHub dh = new DeckHub();
+        private int pos = 0;
 
         public override Task OnConnected()
         {
@@ -54,6 +55,8 @@ namespace BlackJack.Hubs
             Send();
             return base.OnDisconnected(stopCalled);
         }
+
+       
         
         /**
          * Metodo che prepara una nuova partita
@@ -65,6 +68,13 @@ namespace BlackJack.Hubs
             dh.printCards(cards);
 
         }
-       
+
+        public Card GetCard()
+        {
+            Card c = cards[pos];
+            pos++;
+            return c;
+        }
+
     }
 }
