@@ -7,7 +7,7 @@ using BlackJack.Models;
 
 namespace BlackJack.Hubs
 {
-    public class DeckHub : Hub
+    public class Deck
     {
 
         /*
@@ -15,8 +15,8 @@ namespace BlackJack.Hubs
           *   
           */
         public Card[] CreateDeck(int qtaMazzi)
-        { 
-            Deck[] decks = new Deck[qtaMazzi];
+        {
+            Models.Deck[] decks = new Models.Deck[qtaMazzi];
             int qtaCarte = qtaMazzi * 52;
             Card[] cards = new Card[qtaCarte];
             for (int i = 0; i < qtaMazzi; i++)
@@ -42,12 +42,9 @@ namespace BlackJack.Hubs
             return cards;
         }
 
-        public void printCards(Card[] cards)
+        public string printCard(Card card)
         {
-            foreach(Card card in cards)
-            {
-                Console.WriteLine("Carta: " + card.rank + " | " + card.suit);
-            }
+            return "Carta: " + card.rank + " | " + card.suit;
         }
 
         public int GetCardScore(Card card)

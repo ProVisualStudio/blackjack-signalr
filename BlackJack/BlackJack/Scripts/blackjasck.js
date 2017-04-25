@@ -2,14 +2,6 @@
     // dichiaro la referenza al proxy hub
     var hub = $.connection.gameHub;
 
-    // creo la function broadcast
-    hub.client.broadcast = function (name, message) {
-        // evito injection
-        var encName = $('<div />').text(name).html();
-        var encMessage = $('<div />').text(message).html();
-        $('#forum').append('<li><strong>' + encName +
-                    '</strong>:&nbsp;' + encMessage + '</li>');
-    }
     $('#name').val(prompt('Inserisci il tuo nick:', 'nome'));
 
     //creo la funzione newNickName
@@ -20,7 +12,16 @@
                     '</strong>');
     };
 
+    hub.client.printCard = function (card) {
+        var enc = $('<div />').text(card).html();
+        alert(enc);
+    };
+
     $.connection.hub.start().done(function () {
+        Console.log("finito");
         hub.server.setNickname($('#name').val());
+        Console.log("Nick settato");
+        hub.server.newGame();
+        Console.log("Nuova partita");
     });
 });
