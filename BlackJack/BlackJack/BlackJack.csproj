@@ -212,7 +212,7 @@
     <Compile Include="Hubs\GameHub.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Hubs\DeckHub.cs" />
+    <Compile Include="Hubs\Deck.cs" />
     <Compile Include="Models\Deck.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

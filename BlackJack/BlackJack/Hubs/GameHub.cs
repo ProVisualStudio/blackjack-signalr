@@ -12,10 +12,9 @@ namespace BlackJack.Hubs
     {
         private static List<User> Users = new List<User>();
         private static Table table = new Table();
-        private static int conteggio = 0;
         private Card[] cards;
         private static int qtaMazzi = 6;
-        private DeckHub dh = new DeckHub();
+        private Deck dh = new Deck();
 
         public override Task OnConnected()
         {
@@ -26,7 +25,6 @@ namespace BlackJack.Hubs
             User user = new User();
             user.ConnectionId = Context.ConnectionId;
             Users.Add(user);
-            Send();
             return base.OnConnected();
         }
 
@@ -39,19 +37,10 @@ namespace BlackJack.Hubs
             Clients.All.newNickName(name);
         }
 
-       
-        public void Send()
-        {
-            Clients.All.broadcast(conteggio);
-        }
-
-
-
+      
        
         public override Task OnDisconnected(bool stopCalled)
         {
-            conteggio--;
-            Send();
             return base.OnDisconnected(stopCalled);
         }
         
@@ -62,7 +51,10 @@ namespace BlackJack.Hubs
         {
             this.cards = dh.CreateDeck(qtaMazzi);
             dh.ShuffleCards(this.cards);
-            dh.printCards(cards);
+            foreach (Card card in cards)
+            {
+                Clients.All.printCard("Carta: " + card.rank + " | " + card.suit);
+            }
 
         }
        
