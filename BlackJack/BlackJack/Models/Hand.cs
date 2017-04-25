@@ -18,11 +18,6 @@ namespace BlackJack.Models
             cards.Add(c);
         }
 
-        public List<Card> GetCards()
-        {
-            return cards;
-        }
-
         //Metodo che calcola il punteggio totale delle carte che ho in mano
         public void HandScore()
         {

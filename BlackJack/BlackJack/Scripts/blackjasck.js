@@ -19,24 +19,14 @@
 
     hub.client.updNickName = function () {
         $('#listName').empty();
-    };
-
-    hub.client.addCardP = function (card) {
-        $('#playerCards').append('<li><strong>' + card + '</strong></li>');
-    };
+    }
 
     $.connection.hub.start().done(function () {
         hub.server.setNickname($('#name').val());
 
-        $('#start').click(function () {
+        $('#send').click(function () {
             $('#listCards').empty();
             hub.server.newGame();
-        });
-        $('#hit').click(function () {
-            hub.server.hit();
-        });
-        $('#stay').click(function () {
-            hub.server.stay();
         });
     });
 
