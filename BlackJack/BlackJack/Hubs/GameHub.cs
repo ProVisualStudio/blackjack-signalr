@@ -63,9 +63,20 @@ namespace BlackJack.Hubs
 
         public Card GetCard()
         {
+            if(pos > cards.Length)
+            {
+                dh.ShuffleCards(cards);
+                pos = 0;
+            }
             Card c = cards[pos];
             pos++;
             return c;
+        }
+
+        public bool Hit()
+        {
+
+            return true;
         }
 
     }
