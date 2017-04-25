@@ -38,20 +38,28 @@ namespace BlackJack.Hubs
             Random r = new Random();
             int randomIndex = 0;
             Card[] shuffleCards = new Card[cards.Length];
-            var listCard = new List<Card>(cards);
-            for (int i = 0; i < cards.Length; i++)
+            List<Card> listCard = cards.OfType<Card>().ToList();
+            for (int i = 0; i < shuffleCards.Length; i++)
             {
-                randomIndex = r.Next(0, cards.Length); //Choose a random object in the list
-                shuffleCards[i] = listCard.ElementAt(randomIndex); //add it to the new, random list
-                listCard.RemoveAt(randomIndex); //remove to avoid duplicates
+
+                randomIndex = r.Next(0, listCard.Count); //Choose a random object in the list
+                if(listCard.ElementAtOrDefault(randomIndex) != null)
+                {
+                    if (randomIndex != 0)
+                    {
+                        shuffleCards[i] = listCard.ElementAt(randomIndex - 1); //add it to the new, random list
+                        listCard.RemoveAt(randomIndex - 1); //remove to avoid duplicates
+                    }
+                    else
+                    {
+                        shuffleCards[i] = listCard.ElementAt(randomIndex); //add it to the new, random list
+                        listCard.RemoveAt(randomIndex); //remove to avoid duplicates
+                    }
+                }
             }
             return cards;
         }
 
-        public string printCard(Card card)
-        {
-            return "Carta: " + card.rank + " | " + card.suit;
-        }
 
         public int GetCardScore(Card card)
         {

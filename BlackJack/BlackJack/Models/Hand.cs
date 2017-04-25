@@ -20,10 +20,11 @@ namespace BlackJack.Models
 
        public int HandScore()
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < 2; i++)
             {
 
             }
+            return 0;
         }
     }
 }

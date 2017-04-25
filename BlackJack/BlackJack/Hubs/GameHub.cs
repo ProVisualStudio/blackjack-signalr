@@ -52,10 +52,16 @@ namespace BlackJack.Hubs
         {
             this.cards = dh.CreateDeck(qtaMazzi);
             dh.ShuffleCards(this.cards);
+            for(int i = 1; i <= cards.Length; i=i+20)
+            {
+                Clients.All.printCard(cards[i].rank.ToString());
+            }
+            
+            /*
             foreach (Card card in cards)
             {
                 Clients.All.printCard("Carta: " + card.rank + " | " + card.suit);
-            }
+            }*/
 
         }
 

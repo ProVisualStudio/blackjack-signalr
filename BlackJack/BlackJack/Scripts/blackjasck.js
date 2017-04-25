@@ -12,8 +12,9 @@
                     '</strong>');
     };
 
-    hub.client.printCard = function (name) {
-        alert(name);
+    hub.client.printCard = function (card) {
+        $('#listCards').append('<li><strong>' + card +
+                    '</strong>');
     };
 
     $.connection.hub.start().done(function () {

@@ -29,7 +29,7 @@ namespace BlackJack.Models
 
         foreach (var suit in new[] { "Spades", "Hearts", "Clubs", "Diamonds", })
         {
-            for (var rank = 0; rank <= 13; rank++)
+            for (var rank = 0; rank < 13; rank++)
             {
                   Cards[index++] = new Card(rank, suit);
             }
