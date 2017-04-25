@@ -14,7 +14,7 @@ namespace BlackJack.Hubs
         private static Table table = new Table();
         private Card[] cards;
         private static int qtaMazzi = 6;
-        private Deck dh = new Deck();
+        private DeckHelper dh = new DeckHelper();
         private int pos = 0;
 
         public override Task OnConnected()
@@ -80,7 +80,7 @@ namespace BlackJack.Hubs
             return c;
         }
 
-        public bool Hit()
+        public bool Hit(Hand h)
         {
 
             return true;

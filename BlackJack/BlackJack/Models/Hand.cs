@@ -8,9 +8,9 @@ namespace BlackJack.Models
 {
     public class Hand
     {
+        DeckHelper dh = new DeckHelper();
         List<Card> cards = new List<Card>();
         public int Score { get; set; }
-
         public virtual User Utente { get; set; }
 
         public void AddCard(Card c)
@@ -20,11 +20,12 @@ namespace BlackJack.Models
 
        public int HandScore()
         {
-            for (int i = 0; i < 2; i++)
+            int ris = 0;
+            for (int i = 0; i < cards.Count(); i++)
             {
-
+                ris += dh.GetCardScore(cards.ElementAt(i));
             }
-            return 0;
+            return ris;
         }
     }
 }
