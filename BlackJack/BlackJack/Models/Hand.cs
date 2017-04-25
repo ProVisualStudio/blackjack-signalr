@@ -37,5 +37,7 @@ namespace BlackJack.Models
             }
             Score = ris;
         }
+
+
     }
 }

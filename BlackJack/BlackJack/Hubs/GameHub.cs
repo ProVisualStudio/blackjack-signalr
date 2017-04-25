@@ -18,6 +18,9 @@ namespace BlackJack.Hubs
         private int pos = 0;
         private Hand dealerH;
         private Hand playerH;
+        private Random rnd;
+        private bool isPlayerBust = false;
+        private bool isDealerBust = false;
 
         public override Task OnConnected()
         {
@@ -54,7 +57,10 @@ namespace BlackJack.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-       
+       public GameHub()
+        {
+            rnd = new Random();
+        }
         
         /**
          * Metodo che prepara una nuova partita
@@ -71,6 +77,31 @@ namespace BlackJack.Hubs
                 Clients.Caller.printCard("ID:"+ i + " " + cards[i].Rank.ToString()+" "+ cards[i].Suit.ToString() + "Val:" + dh.GetCardScore(cards[i]));
             }
         }
+        /**
+         * Metodo ce fa terminare una partita e ritorna il vincitore
+         */
+        public Hand EndGame()
+        {
+            dealerH.HandScore();
+            playerH.HandScore();
+
+            if (isPlayerBust)
+            {
+                return dealerH;
+            }
+            else if (isDealerBust)
+            {
+                return playerH;
+            }
+            else if(playerH.Score > dealerH.Score && playerH.Score <= 21)
+            {
+                return playerH;
+            }
+            else
+            {
+                return dealerH;
+            }
+        }
 
         public Card GetCard()
         {
@@ -84,10 +115,76 @@ namespace BlackJack.Hubs
             return c;
         }
 
-        public bool Hit(Hand player)
+       
+        public void Hit()
         {
+            playerH.AddCard(GetCard());
+            playerH.HandScore();
+            if (!BustCheck(playerH))
+            {
+                //chiedere al utente cosa fare
+            }
+            else
+            {
+                isPlayerBust = true;
+                EndGame();
+            }
             
-            return true;
+        }
+
+        //metodo che effettua il controllo se l'utente a fa terminare il turno al player
+        public void Stay()
+        {
+            playerH.HandScore();
+            DealerTurn();
+            
+        }
+        /**
+         *metodo che simula il più fedelmente possibile il "funzionamento" del dealer 
+         * */
+        public void DealerTurn() {
+            dealerH.HandScore();
+            if (dealerH.Score < 17)
+            {
+                dealerH.AddCard(GetCard());
+                if (!BustCheck(dealerH))
+                {
+                    DealerTurn();
+                }
+                else
+                {
+                    isDealerBust = true;
+                    EndGame();
+                }
+            }
+            else if(dealerH.Score > 20)
+            {
+                EndGame();
+            }
+            else
+            {
+                if (rnd.Next(0, 2) == 0)
+                {
+                    dealerH.AddCard(GetCard());
+                    EndGame();
+                }
+                else
+                {
+                    EndGame();
+                }
+            }
+            
+        }
+
+        //Metodo che controlla se nella manno si ha Sballato (Bust), in modo da far terminare il gioco
+        public bool BustCheck(Hand h)
+        {
+            if(h.Score > 21)
+            {
+                EndGame();
+                return true;
+            }
+            return false;
         }
 
     }
