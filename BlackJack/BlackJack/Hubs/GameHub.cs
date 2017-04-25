@@ -38,8 +38,6 @@ namespace BlackJack.Hubs
             Clients.All.newNickName(name);
         }
 
-      
-       
         public override Task OnDisconnected(bool stopCalled)
         {
             return base.OnDisconnected(stopCalled);
