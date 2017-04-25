@@ -8,9 +8,9 @@ namespace BlackJack.Models
 {
     public class Hand
     {
+        DeckHelper dh = new DeckHelper();
         List<Card> cards = new List<Card>();
-        public int Score { get; set; }
-
+        public int Score { get; private set; }
         public virtual User Utente { get; set; }
 
         public void AddCard(Card c)
@@ -18,13 +18,26 @@ namespace BlackJack.Models
             cards.Add(c);
         }
 
-       public int HandScore()
+        //Metodo che calcola il punteggio totale delle carte che ho in mano
+        public void HandScore()
         {
-            for (int i = 0; i < 2; i++)
+            bool isAce = false;
+            int ris = 0;
+            for (int i = 0; i < cards.Count(); i++)
             {
-
+                ris += dh.GetCardScore(cards.ElementAt(i));
+                if (cards.ElementAt(i).Rank == 1) {
+                    isAce = true;
+                }
             }
-            return 0;
+
+            if(isAce = true && ris > 21)
+            {
+                ris = ris - 10;
+            }
+            Score = ris;
         }
+
+
     }
 }

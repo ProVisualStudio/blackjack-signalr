@@ -7,7 +7,7 @@ using BlackJack.Models;
 
 namespace BlackJack.Hubs
 {
-    public class Deck
+    public class DeckHelper
     {
 
         /*
