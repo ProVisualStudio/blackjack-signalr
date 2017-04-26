@@ -76,10 +76,7 @@ namespace BlackJack.Hubs
             dealerH.AddCard(GetCard());
             playerH.AddCard(GetCard());
             playerH.AddCard(GetCard());
-            foreach(Card card in playerH.GetCards())
-            {
-                Clients.All.addCardP(card.Suit + "|" + card.Rank);
-            }
+           
             
         }
         /**
@@ -123,11 +120,12 @@ namespace BlackJack.Hubs
        
         public void Hit()
         {
+            
             playerH.AddCard(GetCard());
             playerH.HandScore();
             if (BustCheck(playerH))
             {
-                //chiedere al utente cosa fare
+                
                 isPlayerBust = true;
                 EndGame();
 
