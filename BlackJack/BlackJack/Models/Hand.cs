@@ -13,6 +13,13 @@ namespace BlackJack.Models
         public int Score { get; private set; }
         public virtual User Utente { get; set; }
 
+        public Hand(string nome)
+        {
+            User u = new User();
+            u.Nome = nome;
+            Utente = u;
+        }
+
         public void AddCard(Card c)
         {
             cards.Add(c);
@@ -23,7 +30,7 @@ namespace BlackJack.Models
             return cards;
         }
         //Metodo che calcola il punteggio totale delle carte che ho in mano
-        public void HandScore()
+        public int HandScore()
         {
             bool isAce = false;
             int ris = 0;
@@ -39,7 +46,8 @@ namespace BlackJack.Models
             {
                 ris = ris - 10;
             }
-            Score = ris;
+            Score =  ris;
+            return ris;
         }
 
 

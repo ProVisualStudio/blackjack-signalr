@@ -12,15 +12,16 @@ namespace BlackJack.Hubs
     {
         private static List<User> Users = new List<User>();
         private static Table table = new Table();
-        private Card[] cards;
+        private static Card[] cards;
         private static int qtaMazzi = 6;
-        private DeckHelper dh = new DeckHelper();
-        private int pos = 0;
-        private Hand dealerH;
-        private Hand playerH;
+        private static DeckHelper dh = new DeckHelper();
+        private static Hand dealerH;
+        private static Hand playerH;
         private Random rnd;
-        private bool isPlayerBust = false;
-        private bool isDealerBust = false;
+        private static bool isPlayerBust = false;
+        private static bool isDealerBust = false;
+        private static int playerScore;
+        private static int dealerScore;
 
         public override Task OnConnected()
         {
@@ -67,37 +68,49 @@ namespace BlackJack.Hubs
          */       
         public void NewGame()
         {
-            pos = 1;
+            Clients.Caller.flushTable();
             cards = dh.CreateDeck(qtaMazzi);
             cards = cards.Skip(1).ToArray();
-            cards = dh.ShuffleCards(cards);
-            dealerH= new Hand();
-            playerH = new Hand();
+            cards =  dh.ShuffleCards(cards);
+            dealerH = new Hand("Dealer");
+            playerH = new Hand("Player");
+            playerScore = 0;
+            dealerScore = 0;
             playerH.AddCard(GetCard());
             playerH.AddCard(GetCard());
-            List<Card> c = playerH.GetCards();
-            for (int i = 0; i < c.Count; i++)
+            dealerH.AddCard(GetCard());
+            List<Card> cP = playerH.GetCards();
+            List<Card> cD = dealerH.GetCards();
+            for (int i = 0; i < cP.Count; i++)
             {
-                Clients.Caller.printCardP(c[i].Rank.ToString()+" "+ c[i].Suit.ToString() + "Val:" + dh.GetCardScore(c[i]));
+                //Clients.Caller.printCardP(cP[i].Rank.ToString()+" "+ cP[i].Suit.ToString() + "Val:" + dh.GetCardScore(cP[i]));
+                Clients.Caller.printCardP("/Content/cards/" + cP[i].Rank.ToString() + "_of_" + cP[i].Suit.ToString() + ".png");
             }
+            for (int i = 0; i < cD.Count; i++)
+            {
+                //Clients.Caller.printCardD(cD[i].Rank.ToString() + " " + cD[i].Suit.ToString() + "Val:" + dh.GetCardScore(cD[i]));
+                Clients.Caller.printCardD("/Content/cards/" + cD[i].Rank.ToString() + "_of_" + cD[i].Suit.ToString() + ".png");
+            }
+            playerScore = playerH.HandScore();
+            dealerScore = dealerH.HandScore();
+            Clients.Caller.printPoints(dealerScore, playerScore);
         }
         /**
          * Metodo ce fa terminare una partita e ritorna il vincitore
          */
         public Hand EndGame()
         {
-            dealerH.HandScore();
-            playerH.HandScore();
-
             if (isPlayerBust)
             {
+                isPlayerBust = false;
                 return dealerH;
             }
             else if (isDealerBust)
             {
+                isDealerBust = false;
                 return playerH;
             }
-            else if(playerH.Score > dealerH.Score && playerH.Score <= 21)
+            else if(playerScore > dealerScore && playerScore <= 21)
             {
                 return playerH;
             }
@@ -110,7 +123,7 @@ namespace BlackJack.Hubs
         public Card GetCard()
         {
             if(cards.Length < 1)
-            {
+            { 
                 cards = dh.ShuffleCards(cards);
             }
             Card c = cards[0];
@@ -121,20 +134,16 @@ namespace BlackJack.Hubs
        
         public void Hit()
         {
-            //Card carta = GetCard();
-            playerH.AddCard(GetCard());
-            playerH.HandScore();
-            if (!BustCheck(playerH))
-            {
-                //chiedere al utente cosa fare
-                //Clients.Caller.printCardP(carta.Rank.ToString() + " " + carta.Suit.ToString() + "Val:" + dh.GetCardScore(carta));
-            }
-            else
+            Card carta = GetCard();
+            playerH.AddCard(carta);
+            Clients.Caller.printCardP("/Content/cards/" + carta.Rank.ToString() + "_of_" + carta.Suit.ToString() + ".png");
+            playerScore = playerScore + dh.GetCardScore(carta);
+            Clients.Caller.printPoints(dealerScore, playerScore);
+            if (playerScore > 21)
             {
                 isPlayerBust = true;
-                EndGame();
-            }
-            
+                Clients.Caller.printWinner(EndGame().Utente.Nome);
+            }            
         }
 
         //metodo che effettua il controllo se l'utente a fa terminare il turno al player
@@ -148,34 +157,49 @@ namespace BlackJack.Hubs
          *metodo che simula il più fedelmente possibile il "funzionamento" del dealer 
          * */
         public void DealerTurn() {
-            dealerH.HandScore();
-            if (dealerH.Score < 17)
+            if (dealerScore < 17)
             {
-                dealerH.AddCard(GetCard());
-                if (!BustCheck(dealerH))
+                Card carta = GetCard();
+                dealerH.AddCard(carta);
+                Clients.Caller.printCardD("/Content/cards/"+carta.Rank.ToString() + "_of_" + carta.Suit.ToString() + ".png");
+                dealerScore = dealerScore + dh.GetCardScore(carta);
+                Clients.Caller.printPoints(dealerScore, playerScore);
+                if (dealerScore > 21)
                 {
-                    DealerTurn();
+                    isDealerBust = true;
+                    Clients.Caller.printWinner(EndGame().Utente.Nome);
                 }
                 else
                 {
-                    isDealerBust = true;
-                    EndGame();
+                    DealerTurn();
                 }
             }
-            else if(dealerH.Score > 20) 
+            else if(dealerScore > 20) 
             {
-                EndGame();
+                Clients.Caller.printWinner(EndGame().Utente.Nome);
             }
             else
             {
                 if (rnd.Next(0, 2) == 0)
                 {
-                    dealerH.AddCard(GetCard());
-                    EndGame();
+                    Card carta = GetCard();
+                    dealerH.AddCard(carta);
+                    Clients.Caller.printCardD("/Content/cards/" + carta.Rank.ToString() + "_of_" + carta.Suit.ToString() + ".png");
+                    dealerScore = dealerScore + dh.GetCardScore(carta);
+                    Clients.Caller.printPoints(dealerScore, playerScore);
+                    if (dealerScore > 21)
+                    {
+                        isDealerBust = true;
+                        Clients.Caller.printWinner(EndGame().Utente.Nome);
+                    }
+                    else
+                    {
+                        Clients.Caller.printWinner(EndGame().Utente.Nome);
+                    }
                 }
                 else
                 {
-                    EndGame();
+                    Clients.Caller.printWinner(EndGame().Utente.Nome);
                 }
             }
             

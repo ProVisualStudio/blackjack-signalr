@@ -27,7 +27,7 @@ namespace BlackJack.Models
         Cards = new Card[52];
         var index = 0;
 
-        foreach (var suit in new[] { "Spades", "Hearts", "Clubs", "Diamonds", })
+        foreach (var suit in new[] { "spades", "hearts", "clubs", "diamonds", })
         {
             for (var rank = 1; rank <= 13; rank++)
             {

@@ -18,8 +18,39 @@
     };
 
     hub.client.printCardP = function (card) {
-        $('#listCardsP').append('<li><strong>' + card +
-                    '</strong>');
+        $('#listCardsP').append('<img src="' + card + '" style="height:150px"/>');
+    };
+
+    hub.client.printCardD = function (card) {
+        $('#listCardsD').append('<img src="' + card + '" style="height:150px"/>');
+    };
+
+    hub.client.flushTable = function () {
+        $('#listCardsD').empty();
+        $('#listCardsP').empty();
+        $('#hit').removeAttr('disabled');
+        $('#stay').removeAttr('disabled');
+        $('#start').attr('disabled', 'disabled');
+        $('#perso').attr('hidden', 'hidden');
+        $('#vinto').attr('hidden', 'hidden');
+    };
+
+    hub.client.printWinner = function (nome) {
+        $('#start').removeAttr('disabled');
+        $('#hit').attr('disabled', 'disabled');
+        $('#stay').attr('disabled', 'disabled');
+        if (nome == "Dealer") {
+            $('#perso').removeAttr('hidden');
+        }
+        else {
+            $('#vinto').removeAttr('hidden');
+        }
+        alert(nome + " ha vinto!");
+    };
+
+    hub.client.printPoints = function (dealer, player) {
+        $('#points').empty();
+        $('#points').append('<p>Dealer: ' + dealer + ' Player: ' + player);
     };
 
     hub.client.updNickName = function () {
@@ -36,6 +67,10 @@
 
         $('#hit').click(function () {
             hub.server.hit();
+        });
+
+        $('#stay').click(function () {
+            hub.server.stay();
         });
     });
 

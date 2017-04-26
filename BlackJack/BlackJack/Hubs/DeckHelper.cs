@@ -9,7 +9,6 @@ namespace BlackJack.Hubs
 {
     public class DeckHelper
     {
-
         /*
           *Metodo che prende i mazzi di carte, li unisce e i mischia
           *   
@@ -33,12 +32,12 @@ namespace BlackJack.Hubs
             Models.Deck[] decks = new Models.Deck[2];
         }
 
-        public Card[] ShuffleCards(Card[] cards)
+        public Card[] ShuffleCards(Card[] deck)
         {
             Random r = new Random();
             int randomIndex = 0;
-            Card[] shuffleCards = new Card[cards.Length];
-            List<Card> listCard = cards.OfType<Card>().ToList();
+            Card[] shuffleCards = new Card[deck.Length];
+            List<Card> listCard = deck.OfType<Card>().ToList();
             for (int i = 0; i < shuffleCards.Length; i++)
             {
 

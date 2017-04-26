@@ -1,24 +1,39 @@
 ﻿<h1>BlackJack Online</h1>
 <input type="hidden" id="name" />
+<br />
 <div  class="col-md-12">
-    <input class="btn btn-primary" type="button" id="start" value="Iniza Partita" />
+    <input class="btn btn-primary" type="button" id="start" value="Inizia Partita" />
+    <hr />
+    <div id="perso" class="alert alert-danger" role="alert" hidden>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Hai perso:</span>
+        Il banco ha vinto.
+    </div>
+    <div id="vinto" class="alert alert-success" role="alert" hidden>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Hai Vinto:</span>
+        Hai vinto contro il banco.
+    </div>
 </div>
     <hr />
     <div style="height:65%" class="row">
-        <div style="background-color:darkseagreen" class="col-md-12">
-            <ul id="listCards" class="col-md-6"></ul>
-            <ul id="listCardsP" class="col-md-6"></ul>
+        <div class="col-md-12">
+            <div id="listCardsD" class="col-md-6">
+            </div>
+            <div id="listCardsP" class="col-md-6">
+            </div>
         </div>
     </div>
+    <hr />
     <div style="height:30%" class="row">
-        <div class="col-md-3">
+        <div id="points" class="col-md-3">
 
         </div>
         <div class="col-md-3">
-            <input class="btn btn-success" type="button" id="hit" value="HIT" />
+            <input class="btn btn-success" type="button" id="hit" value="HIT" disabled/>
         </div>
         <div class="col-md-3">
-            <input class="btn btn-danger" type="button" id="stay" value="STAY" />
+            <input class="btn btn-danger" type="button" id="stay" value="STAY" disabled/>
         </div>
         <div class="col-md-3">
             <ul id="listName" class="col-md-6"></ul>
