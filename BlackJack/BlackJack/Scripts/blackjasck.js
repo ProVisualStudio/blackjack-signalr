@@ -17,13 +17,14 @@
                     '</strong>');
     };
 
-    hub.client.updNickName = function () {
-        $('#listName').empty();
+    hub.client.printCardP = function (card) {
+        $('#listCardsP').append('<li><strong>' + card +
+                    '</strong>');
     };
 
-    hub.client.addCardP = function (card) {
-        $('#playerCards').append('<li><strong>' + card + '</strong></li>');
-    };
+    hub.client.updNickName = function () {
+        $('#listName').empty();
+    }
 
     $.connection.hub.start().done(function () {
         hub.server.setNickname($('#name').val());
@@ -32,11 +33,9 @@
             $('#listCards').empty();
             hub.server.newGame();
         });
+
         $('#hit').click(function () {
             hub.server.hit();
-        });
-        $('#stay').click(function () {
-            hub.server.stay();
         });
     });
 

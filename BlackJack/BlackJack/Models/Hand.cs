@@ -22,7 +22,6 @@ namespace BlackJack.Models
         {
             return cards;
         }
-
         //Metodo che calcola il punteggio totale delle carte che ho in mano
         public void HandScore()
         {

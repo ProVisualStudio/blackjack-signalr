@@ -67,17 +67,19 @@ namespace BlackJack.Hubs
          */       
         public void NewGame()
         {
-            this.cards = dh.CreateDeck(qtaMazzi);
-            this.cards = this.cards.Skip(1).ToArray();
-            this.cards = dh.ShuffleCards(this.cards);
+            pos = 1;
+            cards = dh.CreateDeck(qtaMazzi);
+            cards = cards.Skip(1).ToArray();
+            cards = dh.ShuffleCards(cards);
             dealerH= new Hand();
             playerH = new Hand();
-            dealerH.AddCard(GetCard());
-            dealerH.AddCard(GetCard());
             playerH.AddCard(GetCard());
             playerH.AddCard(GetCard());
-           
-            
+            List<Card> c = playerH.GetCards();
+            for (int i = 0; i < c.Count; i++)
+            {
+                Clients.Caller.printCardP(c[i].Rank.ToString()+" "+ c[i].Suit.ToString() + "Val:" + dh.GetCardScore(c[i]));
+            }
         }
         /**
          * Metodo ce fa terminare una partita e ritorna il vincitore
@@ -107,29 +109,27 @@ namespace BlackJack.Hubs
 
         public Card GetCard()
         {
-            if(pos > cards.Length)
+            if(cards.Length < 1)
             {
                 cards = dh.ShuffleCards(cards);
-                pos = 0;
             }
-            Card c = cards[pos];
-            pos++;
+            Card c = cards[0];
+            cards = cards.Skip(1).ToArray();
             return c;
         }
 
        
         public void Hit()
         {
-            
             playerH.AddCard(GetCard());
             playerH.HandScore();
-            if (BustCheck(playerH))
+            if (!BustCheck(playerH))
             {
-                
+                //chiedere al utente cosa fare
                 isPlayerBust = true;
                 EndGame();
-
             }
+            
         }
 
         //metodo che effettua il controllo se l'utente a fa terminare il turno al player
